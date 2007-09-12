@@ -3,7 +3,7 @@ Summary:	Gnome compiz manager
 Summary(pl.UTF-8):	Gnome compiz manager
 Name:		gnome-compiz-manager
 Version:	0.10.4
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications
 Source0:	http://download.gna.org/gcm/gnome-compiz-manager/%{name}-%{version}.tar.gz
@@ -23,6 +23,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Gnome compiz manager is small utility, which manage GL Desktop
 configuration on XGL/AiGLX.
 
+%description -l pl.UTF-8
+Gnome compiz manager jest małym narzędziem zarządzającym konfiguracją
+pulpitu GL na XGL/AiGLX.
+
 %package devel
 Summary:	Header files for GNOME Compiz manager library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki GNOME Compiz manager
@@ -37,7 +41,7 @@ Pliki nagłówkowe biblioteki GNOME Compiz manager.
 
 %package libs
 Summary:	Libraries for GNOME Compiz manager
-Summary(pl.UTF-8):	Pliki bibliotel dla GNOME Compiz manager
+Summary(pl.UTF-8):	Pliki bibliotek dla GNOME Compiz manager
 Group:		Libraries
 
 %description libs
@@ -46,11 +50,23 @@ Libraries for GNOME Compiz manager.
 %description libs -l pl.UTF-8
 Pliki bibliotel dla GNOME Compiz manager.
 
+%package static
+Summary:	Static library for GNOME Compiz manager
+Summary(pl.UTF-8):	Plik biblioteki statycznej GNOME Compiz manager
+Group:		Libraries
+
+%description static
+Static library for GNOME Compiz manager.
+
+%description static -l pl.UTF-8
+Plik biblioteki statycznej dla GNOME Compiz manager.
+
 %prep
 %setup -q
 
 %build
-%configure
+%configure \
+	--disable-schemas-install
 %{__make}
 
 %install
@@ -58,18 +74,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 \
-	autostartdir=%{_datadir}/gnome/autostart
+
 %find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%gconf_schema_install %{name}.schemas
+%gconf_schema_install gnome-compiz-preferences.schemas
 
 %preun
-%gconf_schema_uninstall %{name}.schemas
+%gconf_schema_uninstall gnome-compiz-preferences.schemas
 
 %post libs  -p /sbin/ldconfig
 
@@ -80,18 +95,24 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README
 %{_sysconfdir}/gconf/schemas/gnome-compiz-preferences.schemas
 %attr(755,root,root) %{_bindir}/*
-%{_libdir}/%{name}
+%{_libdir}/%{name}/*.plugin
 %{_desktopdir}/*.desktop
-%doc %{_docdir}/%{name}
 %{_datadir}/%{name}
 %{_mandir}/man1/*.1.*
 
 %files libs
 %defattr(644,root,root,755)
 %dir %{_libdir}/%{name}
-%{_libdir}/%{name}/*.so*
-%{_libdir}/*.so*
+%{_libdir}/%{name}/*.so
+%{_libdir}/*.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/%{name}
+%{_libdir}/libgnome-compiz-manager.la
+%{_libdir}/libgnome-compiz-manager.so
+%{_pkgconfigdir}/%{name}.pc
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/*.a
