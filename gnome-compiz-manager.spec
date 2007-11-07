@@ -3,7 +3,7 @@ Summary:	Gnome compiz manager
 Summary(pl.UTF-8):	Gnome compiz manager
 Name:		gnome-compiz-manager
 Version:	0.10.4
-Release:	0.2
+Release:	0.3
 License:	GPL
 Group:		Applications
 Source0:	http://download.gna.org/gcm/gnome-compiz-manager/%{name}-%{version}.tar.gz
@@ -111,8 +111,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}
 %{_libdir}/libgnome-compiz-manager.la
 %{_libdir}/libgnome-compiz-manager.so
+%{_libdir}/%{name}/libgcp*.la
 %{_pkgconfigdir}/%{name}.pc
 
 %files static
 %defattr(644,root,root,755)
+%{_libdir}/%{name}/libgcp*.a
 %{_libdir}/*.a
