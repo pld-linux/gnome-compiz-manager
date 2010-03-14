@@ -8,12 +8,14 @@ Group:		X11/Applications
 Source0:	http://download.gna.org/gcm/gnome-compiz-manager/%{name}-%{version}.tar.gz
 # Source0-md5:	654041b7bf9869e7d1724cb90739cdef
 URL:		http://gandalfn.wordpress.com/
+BuildRequires:	gettext-devel
 BuildRequires:	gnome-desktop-devel >= 2.0
 BuildRequires:	gob2 >= 2.0.14
 BuildRequires:	gtk+2-devel >= 2:2.10
 BuildRequires:	libgnomeui-devel >= 2.0
 BuildRequires:	librsvg-devel >= 2.0
 BuildRequires:	libwnck-devel >= 1.0
+BuildRequires:	perl-XML-Parser
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 Requires(post,preun):	GConf2
