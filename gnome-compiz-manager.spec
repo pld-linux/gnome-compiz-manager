@@ -2,7 +2,7 @@ Summary:	GNOME compiz manager
 Summary(pl.UTF-8):	Zarządca compiza dla GNOME
 Name:		gnome-compiz-manager
 Version:	0.10.4
-Release:	7
+Release:	8
 License:	LGPL v2.1+ (library), GPL v2+ (the rest)
 Group:		X11/Applications
 Source0:	http://download.gna.org/gcm/gnome-compiz-manager/%{name}-%{version}.tar.gz
